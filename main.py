@@ -1,5 +1,6 @@
 from app.audit_engine.alt_checker import check_alt_attributes
 from app.audit_engine.aria_checker import check_aria_labels
+from app.audit_engine.contrast_checker import check_color_contrast_in_html  # New import
 from app.utils.report_generator import generate_report
 
 def main():
@@ -10,6 +11,7 @@ def main():
     # Run checks
     alt_issues = check_alt_attributes(html_content)
     aria_issues = check_aria_labels(html_content)
+    contrast_issues = check_color_contrast_in_html(html_content)  # Run the new check
 
     # Generate the report
     report = ""
@@ -17,9 +19,11 @@ def main():
         report += generate_report(alt_issues, "Alt Text Check")
     if aria_issues:
         report += generate_report(aria_issues, "ARIA Label Check")
+    if contrast_issues:  # Add the color contrast issues to the report
+        report += generate_report(contrast_issues, "Color Contrast Check")
     
     # If no issues, report that everything is fine
-    if not alt_issues and not aria_issues:
+    if not alt_issues and not aria_issues and not contrast_issues:
         report = "All checks passed! No issues found.\n"
 
     # Output the report

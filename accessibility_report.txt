@@ -16,3 +16,9 @@ Issue: Missing aria-label attribute.
 Tag: <a href="#">Click me</a>
 
 ==================================================
+Accessibility Report - Color Contrast Check
+==================================================
+Issue: Issue: Poor color contrast. Contrast ratio: 3.68
+Tag: <p>Low contrast text</p>
+
+==================================================
