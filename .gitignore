@@ -1,0 +1,9 @@
+venv/
+wcag_env/
+__pycache__/
+*.pyc
+*.pyo
+
+# Logs and temporary files
+*.log
+*.tmp

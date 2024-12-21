@@ -1,0 +1,18 @@
+Accessibility Report - Alt Text Check
+==================================================
+Issue: Missing alt attribute.
+Tag: <img src="image1.jpg"/>
+
+==================================================
+Accessibility Report - ARIA Label Check
+==================================================
+Issue: Missing aria-label attribute.
+Tag: <div role="button">No label</div>
+
+Issue: Missing aria-label attribute.
+Tag: <button>Submit</button>
+
+Issue: Missing aria-label attribute.
+Tag: <a href="#">Click me</a>
+
+==================================================
