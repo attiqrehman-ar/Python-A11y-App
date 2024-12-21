@@ -22,3 +22,9 @@ Issue: Issue: Poor color contrast. Contrast ratio: 3.68
 Tag: <p>Low contrast text</p>
 
 ==================================================
+Accessibility Report - Headings Structure Check
+==================================================
+Issue: Skipped heading <h1> after <h2>
+Tag: <h2>this is the first heading </h2>
+
+==================================================
