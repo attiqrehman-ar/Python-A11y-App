@@ -40,3 +40,21 @@ Issue: Vague link text.
 Tag: <a href="#">Click here</a>
 
 ==================================================
+Accessibility Report - Keyboard Navigation Check
+==================================================
+Issue: Focusable element missing visible focus style.
+Tag: <button>Submit</button>
+
+Issue: Focusable element missing visible focus style.
+Tag: <a href="#">Click me</a>
+
+Issue: Focusable element missing visible focus style.
+Tag: <a href="#">readmore</a>
+
+Issue: Focusable element missing visible focus style.
+Tag: <a href="#">Click here</a>
+
+Issue: No "Skip to Content" link found.
+Tag: N/A
+
+==================================================

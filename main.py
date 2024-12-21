@@ -2,6 +2,7 @@ from app.audit_engine.alt_checker import check_alt_attributes
 from app.audit_engine.aria_checker import check_aria_labels
 from app.audit_engine.contrast_checker import check_color_contrast_in_html  # New import
 from app.audit_engine.heading_checker import check_headings_structure
+from app.audit_engine.keyboard_navigation_checker import check_keyboard_navigation
 from app.audit_engine.link_checker import check_link_text_clarity
 from app.utils.report_generator import generate_report
 
@@ -16,6 +17,7 @@ def main():
     contrast_issues = check_color_contrast_in_html(html_content)  # Run the new check
     heading_issues = check_headings_structure(html_content)
     link_issues = check_link_text_clarity(html_content)
+    keyboard_issues = check_keyboard_navigation(html_content)
     # Generate the report
     report = ""
     if alt_issues:
@@ -29,9 +31,11 @@ def main():
     if link_issues:
         report += generate_report(link_issues, "Link Text Clarity Check")
     # If no issues, report that everything is fine
-    if not alt_issues and not aria_issues and not contrast_issues and not heading_issues and not link_issues:
-        report = "All checks passed! No issues found.\n"
+    if keyboard_issues:
+        report += generate_report(keyboard_issues, "Keyboard Navigation Check")
 
+    if not any([alt_issues, aria_issues, contrast_issues, heading_issues, link_issues, keyboard_issues]):
+        report = "All checks passed! No issues found.\n"
     # Output the report
     print(report)
 
