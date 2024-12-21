@@ -1,33 +1,38 @@
 <html>
     <body>
-        <!-- Heading Structure -->
         <h2>this is the first heading </h2>
-        
-        <!-- Button without aria-label (to be flagged by the ARIA check) -->
         <button>Submit</button>
-        
-        <!-- Link with vague text (to be flagged by the link text clarity check) -->
         <a href="#">Click me</a>
-        
-        <!-- Another heading -->
         <h1>this is second heading</h1>
-        
-        <!-- Div acting as a button without an aria-label (to be flagged by the ARIA check) -->
         <div role="button">No label</div>
-        
-        <!-- Link with vague text (to be flagged by the link text clarity check) -->
         <a href="#">readmore</a>
-        
-        <!-- Button with aria-label (this is fine) -->
         <span role="button" aria-label="Click to proceed">Go</span>
-        
-        <!-- Another vague link (to be flagged by the link text clarity check) -->
         <a href="#">Click here</a>
-        
-        <!-- Images without alt attribute (to be flagged by the alt attribute check) -->
+
         <img src="image1.jpg">
-        
-        <!-- Image with alt attribute (this is fine) -->
         <img src="image2.jpg" alt="An image of a cat">
+
+        <!-- Test for Keyboard Navigation -->
+        <a href="#skip-to-content" id="skip-to-content">Skip to Content</a>
+
+        <!-- Focusable elements missing visible focus styles -->
+        <a href="#">Focusable Link</a>
+        <button>Focusable Button</button>
+        <input type="text" placeholder="Focusable Input">
+        <textarea placeholder="Focusable Textarea"></textarea>
+        <select>
+            <option>Select Option</option>
+        </select>
+        <details>
+            <summary>Focusable Details</summary>
+            <p>Details content</p>
+        </details>
+
+        <!-- Test for elements with no tabindex -->
+        <div>Not focusable</div>
+
+        <!-- Test for missing outline or border styles for focusable elements -->
+        <a href="#" style="color: blue;">No visible focus style link</a>
+        <button style="color: blue;">No visible focus style button</button>
     </body>
 </html>
