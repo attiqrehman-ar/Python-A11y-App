@@ -21,6 +21,24 @@ Tag: <a href="#">readmore</a>
 Issue: Missing aria-label attribute.
 Tag: <a href="#">Click here</a>
 
+Issue: Missing aria-label attribute.
+Tag: <a href="#skip-to-content" id="skip-to-content">Skip to Content</a>
+
+Issue: Missing aria-label attribute.
+Tag: <a href="#">Focusable Link</a>
+
+Issue: Missing aria-label attribute.
+Tag: <button>Focusable Button</button>
+
+Issue: Missing aria-label attribute.
+Tag: <input placeholder="Focusable Input" type="text"/>
+
+Issue: Missing aria-label attribute.
+Tag: <a href="#" style="color: blue;">No visible focus style link</a>
+
+Issue: Missing aria-label attribute.
+Tag: <button style="color: blue;">No visible focus style button</button>
+
 ==================================================
 Accessibility Report - Color Contrast Check
 ==================================================
@@ -54,7 +72,36 @@ Tag: <a href="#">readmore</a>
 Issue: Focusable element missing visible focus style.
 Tag: <a href="#">Click here</a>
 
-Issue: No "Skip to Content" link found.
-Tag: N/A
+Issue: Focusable element missing visible focus style.
+Tag: <a href="#skip-to-content" id="skip-to-content">Skip to Content</a>
+
+Issue: Focusable element missing visible focus style.
+Tag: <a href="#">Focusable Link</a>
+
+Issue: Focusable element missing visible focus style.
+Tag: <button>Focusable Button</button>
+
+Issue: Focusable element missing visible focus style.
+Tag: <input placeholder="Focusable Input" type="text"/>
+
+Issue: Focusable element missing visible focus style.
+Tag: <textarea placeholder="Focusable Textarea"></textarea>
+
+Issue: Focusable element missing visible focus style.
+Tag: <select>
+<option>Select Option</option>
+</select>
+
+Issue: Focusable element missing visible focus style.
+Tag: <details>
+<summary>Focusable Details</summary>
+<p>Details content</p>
+</details>
+
+Issue: Focusable element missing visible focus style.
+Tag: <a href="#" style="color: blue;">No visible focus style link</a>
+
+Issue: Focusable element missing visible focus style.
+Tag: <button style="color: blue;">No visible focus style button</button>
 
 ==================================================

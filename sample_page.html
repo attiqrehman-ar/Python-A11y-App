@@ -1,38 +1,178 @@
-<html>
-    <body>
-        <h2>this is the first heading </h2>
-        <button>Submit</button>
-        <a href="#">Click me</a>
-        <h1>this is second heading</h1>
-        <div role="button">No label</div>
-        <a href="#">readmore</a>
-        <span role="button" aria-label="Click to proceed">Go</span>
-        <a href="#">Click here</a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accessibility Test Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #0044cc;
+            color: white;
+            padding: 10px;
+        }
+        header h1 {
+            font-size: 2em;
+            margin: 0;
+        }
+        nav {
+            background-color: #f0f0f0;
+            padding: 10px;
+        }
+        nav a {
+            text-decoration: none;
+            color: #0044cc;
+            margin-right: 15px;
+        }
+        nav a:focus {
+            outline: 3px solid #ff0000;
+        }
+        main {
+            padding: 20px;
+        }
+        footer {
+            background-color: #222;
+            color: white;
+            text-align: center;
+            padding: 10px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .modal {
+            display: none;
+            background-color: rgba(0, 0, 0, 0.7);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            padding: 20px;
+        }
+        .modal-content {
+            background-color: #333;
+            padding: 20px;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .modal button {
+            background-color: #ff0000;
+        }
+        .modal button:hover {
+            background-color: #cc0000;
+        }
+        p {
+            background-color: #d3d3d3;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
 
-        <img src="image1.jpg">
-        <img src="image2.jpg" alt="An image of a cat">
+<header role="banner">
+    <h1>Accessibility Testing Page</h1>
+</header>
 
-        <!-- Test for Keyboard Navigation -->
-        <a href="#skip-to-content" id="skip-to-content">Skip to Content</a>
+<!-- Navigation Landmark -->
+<nav role="navigation">
+    <a href="#home" aria-label="Go to homepage">Home</a>
+    <a href="#services" aria-label="Learn about our services">Services</a>
+    <a href="#contact" aria-label="Contact us">Contact</a>
+</nav>
 
-        <!-- Focusable elements missing visible focus styles -->
-        <a href="#">Focusable Link</a>
-        <button>Focusable Button</button>
-        <input type="text" placeholder="Focusable Input">
-        <textarea placeholder="Focusable Textarea"></textarea>
-        <select>
-            <option>Select Option</option>
-        </select>
-        <details>
-            <summary>Focusable Details</summary>
-            <p>Details content</p>
-        </details>
+<main role="main">
+    <section>
+        <h2>Introduction</h2>
+        <p>This page is designed to demonstrate various accessibility features. It includes ARIA landmarks, link clarity, modal accessibility, and color contrast checks.</p>
+    </section>
 
-        <!-- Test for elements with no tabindex -->
-        <div>Not focusable</div>
+    <!-- Modal to Test Keyboard Accessibility -->
+    <section>
+        <h2>Modal Accessibility</h2>
+        <button onclick="openModal()">Open Modal</button>
+    </section>
 
-        <!-- Test for missing outline or border styles for focusable elements -->
-        <a href="#" style="color: blue;">No visible focus style link</a>
-        <button style="color: blue;">No visible focus style button</button>
-    </body>
+    <!-- Modal Dialog -->
+    <div id="modal" class="modal" role="dialog" aria-hidden="true">
+        <div class="modal-content">
+            <h2>Modal Content</h2>
+            <p>This modal contains important information. You can close it using the button below.</p>
+            <button onclick="closeModal()">Close Modal</button>
+        </div>
+    </div>
+
+    <!-- Links to Test Link Text Clarity -->
+    <section>
+        <h2>Links with Clear Text</h2>
+        <a href="#learn-more" aria-label="Learn more about our services">Learn More</a>
+        <a href="#contact-us" aria-label="Get in touch with us">Contact Us</a>
+    </section>
+
+    <!-- Poor Color Contrast Example -->
+    <section>
+        <h2>Color Contrast Example</h2>
+        <p style="background-color: #ccc; color: #999;">This paragraph has poor contrast. It is hard to read for some users due to the low contrast between background and text.</p>
+    </section>
+</main>
+
+<!-- Footer Landmark -->
+<footer role="contentinfo">
+    <p>Footer content goes here.</p>
+</footer>
+
+<script>
+    // JavaScript functions to open and close the modal
+    function openModal() {
+        const modal = document.getElementById('modal');
+        modal.style.display = 'flex';
+        modal.setAttribute('aria-hidden', 'false');
+        modal.focus(); // Ensure modal gains focus when opened
+    }
+
+    function closeModal() {
+        const modal = document.getElementById('modal');
+        modal.style.display = 'none';
+        modal.setAttribute('aria-hidden', 'true');
+    }
+
+    // Keyboard Accessibility for Modal (focus trapping)
+    const modal = document.getElementById('modal');
+    modal.addEventListener('keydown', function(event) {
+        if (event.key === 'Tab') {
+            let focusableElements = modal.querySelectorAll('button, a, input, textarea');
+            let firstFocusable = focusableElements[0];
+            let lastFocusable = focusableElements[focusableElements.length - 1];
+            
+            if (event.shiftKey) { // Shift + Tab
+                if (document.activeElement === firstFocusable) {
+                    lastFocusable.focus();
+                    event.preventDefault();
+                }
+            } else { // Tab
+                if (document.activeElement === lastFocusable) {
+                    firstFocusable.focus();
+                    event.preventDefault();
+                }
+            }
+        }
+    });
+</script>
+
+</body>
 </html>
