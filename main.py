@@ -26,6 +26,8 @@ def main():
         report += generate_report(contrast_issues, "Color Contrast Check")
     if heading_issues:
         report += generate_report(heading_issues, "Headings Structure Check")  # Added heading structure check report
+    if link_issues:
+        report += generate_report(link_issues, "Link Text Clarity Check")
     # If no issues, report that everything is fine
     if not alt_issues and not aria_issues and not contrast_issues and not heading_issues and not link_issues:
         report = "All checks passed! No issues found.\n"

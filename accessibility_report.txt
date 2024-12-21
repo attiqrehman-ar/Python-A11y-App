@@ -34,3 +34,9 @@ Issue: Skipped heading <h1> after <h2>
 Tag: <h2>this is the first heading </h2>
 
 ==================================================
+Accessibility Report - Link Text Clarity Check
+==================================================
+Issue: Vague link text.
+Tag: <a href="#">Click here</a>
+
+==================================================
