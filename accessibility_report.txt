@@ -15,6 +15,12 @@ Tag: <button>Submit</button>
 Issue: Missing aria-label attribute.
 Tag: <a href="#">Click me</a>
 
+Issue: Missing aria-label attribute.
+Tag: <a href="#">readmore</a>
+
+Issue: Missing aria-label attribute.
+Tag: <a href="#">Click here</a>
+
 ==================================================
 Accessibility Report - Color Contrast Check
 ==================================================

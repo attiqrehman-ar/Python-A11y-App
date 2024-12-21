@@ -1,12 +1,33 @@
 <html>
     <body>
+        <!-- Heading Structure -->
         <h2>this is the first heading </h2>
+        
+        <!-- Button without aria-label (to be flagged by the ARIA check) -->
         <button>Submit</button>
+        
+        <!-- Link with vague text (to be flagged by the link text clarity check) -->
         <a href="#">Click me</a>
+        
+        <!-- Another heading -->
         <h1>this is second heading</h1>
+        
+        <!-- Div acting as a button without an aria-label (to be flagged by the ARIA check) -->
         <div role="button">No label</div>
+        
+        <!-- Link with vague text (to be flagged by the link text clarity check) -->
+        <a href="#">readmore</a>
+        
+        <!-- Button with aria-label (this is fine) -->
         <span role="button" aria-label="Click to proceed">Go</span>
+        
+        <!-- Another vague link (to be flagged by the link text clarity check) -->
+        <a href="#">Click here</a>
+        
+        <!-- Images without alt attribute (to be flagged by the alt attribute check) -->
         <img src="image1.jpg">
+        
+        <!-- Image with alt attribute (this is fine) -->
         <img src="image2.jpg" alt="An image of a cat">
     </body>
 </html>
