@@ -1,43 +1,19 @@
-Accessibility Report - Alt Text Check
-==================================================
-Issue: Missing alt attribute.
-Tag: <img src="image1.jpg"/>
-
-==================================================
 Accessibility Report - ARIA Label Check
 ==================================================
 Issue: Missing aria-label attribute.
-Tag: <div role="button">No label</div>
+Tag: <div aria-hidden="true" class="modal" id="modal" role="dialog">
+<div class="modal-content">
+<h2>Modal Content</h2>
+<p>This modal contains important information. You can close it using the button below.</p>
+<button onclick="closeModal()">Close Modal</button>
+</div>
+</div>
 
 Issue: Missing aria-label attribute.
-Tag: <button>Submit</button>
+Tag: <button onclick="openModal()">Open Modal</button>
 
 Issue: Missing aria-label attribute.
-Tag: <a href="#">Click me</a>
-
-Issue: Missing aria-label attribute.
-Tag: <a href="#">readmore</a>
-
-Issue: Missing aria-label attribute.
-Tag: <a href="#">Click here</a>
-
-Issue: Missing aria-label attribute.
-Tag: <a href="#skip-to-content" id="skip-to-content">Skip to Content</a>
-
-Issue: Missing aria-label attribute.
-Tag: <a href="#">Focusable Link</a>
-
-Issue: Missing aria-label attribute.
-Tag: <button>Focusable Button</button>
-
-Issue: Missing aria-label attribute.
-Tag: <input placeholder="Focusable Input" type="text"/>
-
-Issue: Missing aria-label attribute.
-Tag: <a href="#" style="color: blue;">No visible focus style link</a>
-
-Issue: Missing aria-label attribute.
-Tag: <button style="color: blue;">No visible focus style button</button>
+Tag: <button onclick="closeModal()">Close Modal</button>
 
 ==================================================
 Accessibility Report - Color Contrast Check
@@ -46,62 +22,36 @@ Issue: Issue: Poor color contrast. Contrast ratio: 3.68
 Tag: <p>Low contrast text</p>
 
 ==================================================
-Accessibility Report - Headings Structure Check
-==================================================
-Issue: Skipped heading <h1> after <h2>
-Tag: <h2>this is the first heading </h2>
-
-==================================================
 Accessibility Report - Link Text Clarity Check
 ==================================================
 Issue: Vague link text.
-Tag: <a href="#">Click here</a>
+Tag: <a aria-label="Learn more about our services" href="#learn-more">Learn More</a>
 
 ==================================================
 Accessibility Report - Keyboard Navigation Check
 ==================================================
 Issue: Focusable element missing visible focus style.
-Tag: <button>Submit</button>
+Tag: <a aria-label="Go to homepage" href="#home">Home</a>
 
 Issue: Focusable element missing visible focus style.
-Tag: <a href="#">Click me</a>
+Tag: <a aria-label="Learn about our services" href="#services">Services</a>
 
 Issue: Focusable element missing visible focus style.
-Tag: <a href="#">readmore</a>
+Tag: <a aria-label="Contact us" href="#contact">Contact</a>
 
 Issue: Focusable element missing visible focus style.
-Tag: <a href="#">Click here</a>
+Tag: <button onclick="openModal()">Open Modal</button>
 
 Issue: Focusable element missing visible focus style.
-Tag: <a href="#skip-to-content" id="skip-to-content">Skip to Content</a>
+Tag: <button onclick="closeModal()">Close Modal</button>
 
 Issue: Focusable element missing visible focus style.
-Tag: <a href="#">Focusable Link</a>
+Tag: <a aria-label="Learn more about our services" href="#learn-more">Learn More</a>
 
 Issue: Focusable element missing visible focus style.
-Tag: <button>Focusable Button</button>
+Tag: <a aria-label="Get in touch with us" href="#contact-us">Contact Us</a>
 
-Issue: Focusable element missing visible focus style.
-Tag: <input placeholder="Focusable Input" type="text"/>
-
-Issue: Focusable element missing visible focus style.
-Tag: <textarea placeholder="Focusable Textarea"></textarea>
-
-Issue: Focusable element missing visible focus style.
-Tag: <select>
-<option>Select Option</option>
-</select>
-
-Issue: Focusable element missing visible focus style.
-Tag: <details>
-<summary>Focusable Details</summary>
-<p>Details content</p>
-</details>
-
-Issue: Focusable element missing visible focus style.
-Tag: <a href="#" style="color: blue;">No visible focus style link</a>
-
-Issue: Focusable element missing visible focus style.
-Tag: <button style="color: blue;">No visible focus style button</button>
+Issue: No "Skip to Content" link found.
+Tag: N/A
 
 ==================================================
