@@ -7,14 +7,21 @@ from app.audit_engine.keyboard_navigation_checker import check_keyboard_navigati
 from app.audit_engine.link_checker import check_link_text_clarity
 from app.utils.report_generator import generate_report
 from bs4 import BeautifulSoup
+from urllib.parse import urlparse
 
 def fetch_html_from_url(url):
     """
     Fetches the HTML content of the webpage from the provided URL.
     """
+    # Check if the URL includes a scheme (http or https)
+    parsed_url = urlparse(url)
+    if not parsed_url.scheme:
+        print(f"Error fetching URL: Invalid URL '{url}': No scheme supplied. Perhaps you meant https://?")
+        return None
+
     try:
         response = requests.get(url)
-        response.raise_for_status()
+        response.raise_for_status()  # Raise an exception for HTTP errors
         return response.text
     except requests.exceptions.RequestException as e:
         print(f"Error fetching URL: {e}")
@@ -22,7 +29,11 @@ def fetch_html_from_url(url):
 
 def main():
     # Get the URL from the user
-    url = input("Enter the URL to check: ")
+    url = input("Enter the URL to check: ").strip()
+    
+    if not url:
+        print("No URL provided.")
+        return
     
     # Fetch the HTML content from the URL
     html_content = fetch_html_from_url(url)
