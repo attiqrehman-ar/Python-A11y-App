@@ -1,23 +1,30 @@
+
 from bs4 import BeautifulSoup
+
 
 def check_link_text_clarity(html_content):
     """
-    Check if link texts are descriptive.
+    Checks for vague link text and suggests improvements. It now considers the presence of `aria-label`.
     """
-    issues = []
     soup = BeautifulSoup(html_content, 'html.parser')
-    
-    # Find all anchor tags
+
+    issues = []
     links = soup.find_all('a')
-    
+
     for link in links:
-        link_text = link.get_text().strip()
-        
-        # Check for vague link texts
-        if link_text.lower() in ["click here", "read more", "learn more", "more details"]:
+        # Check if aria-label is present, if not, look for the visible text
+        visible_text = link.get_text(strip=True)
+        aria_label = link.get('aria-label', '').strip()
+
+        if not aria_label and not visible_text:
             issues.append({
-                'message': 'Vague link text.',
-                'tag': str(link)
+                'tag': str(link),
+                'message': "Link has neither visible text nor aria-label, making it unclear."
             })
-    
+        elif aria_label and len(aria_label) < 3:
+            issues.append({
+                'tag': str(link),
+                'message': "aria-label is too vague or too short."
+            })
+
     return issues
