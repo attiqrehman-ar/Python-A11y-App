@@ -1,0 +1,24 @@
+Accessibility Report - Color Contrast Check
+==================================================
+Issue: Issue: Poor color contrast. Contrast ratio: 3.68
+Tag: <p>Low contrast text</p>
+
+==================================================
+Accessibility Report - Headings Structure Check
+==================================================
+Issue: Skipped heading <h3> after <h4>
+Tag: <h4>Select options</h4>
+
+==================================================
+Accessibility Report - Link Text Clarity Check
+==================================================
+Issue: Vague link text.
+Tag: <a aria-label="Learn more About Care Tips" href="https://www.margaretoleary.com/pages/care-tips-2" title="Care Tips Page"><span style="text-decoration:underline">Learn More</span></a>
+
+==================================================
+Accessibility Report - Keyboard Navigation Check
+==================================================
+Issue: No "Skip to Content" link found.
+Tag: N/A
+
+==================================================

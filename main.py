@@ -6,12 +6,30 @@ from app.audit_engine.heading_checker import check_headings_structure
 from app.audit_engine.keyboard_navigation_checker import check_keyboard_navigation
 from app.audit_engine.link_checker import check_link_text_clarity
 from app.utils.report_generator import generate_report
-from bs4 import BeautifulSoup
 from urllib.parse import urlparse
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
+from webdriver_manager.chrome import ChromeDriverManager
+
+def init_driver():
+    """
+    Initialize the Selenium WebDriver with headless mode.
+    """
+    chrome_options = Options()
+    chrome_options.add_argument("--headless")  # Run in headless mode
+    chrome_options.add_argument("--no-sandbox")
+    chrome_options.add_argument("--disable-dev-shm-usage")
+
+    # Use ChromeDriverManager to automatically download and install the correct ChromeDriver
+    service = Service(ChromeDriverManager().install())
+    driver = webdriver.Chrome(service=service, options=chrome_options)
+
+    return driver
 
 def fetch_html_from_url(url):
     """
-    Fetches the HTML content of the webpage from the provided URL.
+    Fetches the HTML content of the webpage from the provided URL using Selenium.
     """
     # Check if the URL includes a scheme (http or https)
     parsed_url = urlparse(url)
@@ -20,10 +38,19 @@ def fetch_html_from_url(url):
         return None
 
     try:
-        response = requests.get(url)
-        response.raise_for_status()  # Raise an exception for HTTP errors
-        return response.text
-    except requests.exceptions.RequestException as e:
+        # Initialize the WebDriver and fetch the HTML page
+        driver = init_driver()
+        driver.get(url)
+        
+        # Wait for the page to load
+        driver.implicitly_wait(10)  # Adjust as necessary for your use case
+        
+        # Get the page source (fully rendered HTML)
+        html_content = driver.page_source
+        driver.quit()  # Close the driver
+
+        return html_content
+    except Exception as e:
         print(f"Error fetching URL: {e}")
         return None
 
