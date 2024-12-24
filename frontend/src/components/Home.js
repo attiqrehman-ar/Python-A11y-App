@@ -119,11 +119,23 @@ const Home = () => {
             ) : (
               <p>No issues found for Heading Structure.</p>
             )}
-
-            <button onClick={handleDownloadPdf}>Download PDF Report</button>
           </div>
         )}
       </div>
+
+      <button
+        onClick={handleDownloadPdf}
+        style={{
+          padding: '10px',
+          backgroundColor: '#4CAF50',
+          color: 'white',
+          border: 'none',
+          cursor: 'pointer',
+          marginTop: '20px',
+        }}
+      >
+        Download PDF Report
+      </button>
 
       <Footer />
     </div>
