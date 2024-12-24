@@ -7,48 +7,46 @@ from app.audit_engine.heading_checker import check_headings_structure
 from app.audit_engine.keyboard_navigation_checker import check_keyboard_navigation
 from app.utils.report_generator import generate_report
 
+# Selenium imports
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
+from webdriver_manager.chrome import ChromeDriverManager
+
 app = Flask(__name__)
 CORS(app)
 
-# Example endpoint for alt text check
-@app.route('/api/check-alt-text', methods=['POST'])
-def api_check_alt_text():
-    content = request.json
-    html_content = content.get('html', '')
-    result = check_alt_attributes(html_content)
-    return jsonify(result)
+# Helper function to fetch HTML content from URL using Selenium
+def fetch_html_from_url(url):
+    options = Options()
+    options.headless = True  # Run in headless mode (no browser window)
+    options.add_argument('--no-sandbox')
+    options.add_argument('--disable-dev-shm-usage')
+    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+    driver.get(url)
+    html_content = driver.page_source
+    driver.quit()
+    return html_content
 
-# Example endpoint for ARIA label check
-@app.route('/api/check-aria-labels', methods=['POST'])
-def api_check_aria_labels():
+# Example endpoint to check accessibility for a webpage URL
+@app.route('/api/check-url-accessibility', methods=['POST'])
+def api_check_url_accessibility():
     content = request.json
-    html_content = content.get('html', '')
-    result = check_aria_labels(html_content)
-    return jsonify(result)
-
-# Example endpoint for color contrast check
-@app.route('/api/check-color-contrast', methods=['POST'])
-def api_check_color_contrast():
-    content = request.json
-    html_content = content.get('html', '')
-    result = check_color_contrast_in_html(html_content)
-    return jsonify(result)
-
-# Example endpoint for heading structure check
-@app.route('/api/check-heading-structure', methods=['POST'])
-def api_check_heading_structure():
-    content = request.json
-    html_content = content.get('html', '')
-    result = check_headings_structure(html_content)
-    return jsonify(result)
-
-# Example endpoint for keyboard navigation check
-@app.route('/api/check-keyboard-navigation', methods=['POST'])
-def api_check_keyboard_navigation():
-    content = request.json
-    html_content = content.get('html', '')
-    result = check_keyboard_navigation(html_content)
-    return jsonify(result)
+    url = content.get('url', '')
+    
+    # Fetch the HTML content of the page
+    html_content = fetch_html_from_url(url)
+    
+    # Run checks on the fetched HTML content
+    results = {
+        "alt_text": check_alt_attributes(html_content),
+        "aria_labels": check_aria_labels(html_content),
+        "color_contrast": check_color_contrast_in_html(html_content),
+        "heading_structure": check_headings_structure(html_content),
+        "keyboard_navigation": check_keyboard_navigation(html_content),
+    }
+    
+    return jsonify(results)
 
 # Endpoint to generate report
 @app.route('/api/generate-report', methods=['POST'])
