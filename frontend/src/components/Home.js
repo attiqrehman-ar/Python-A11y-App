@@ -1,3 +1,4 @@
+// frontend/src/components/Home.js
 import React, { useState } from 'react';
 import axios from 'axios';
 import Header from './Header';
@@ -8,6 +9,7 @@ const Home = () => {
   const [results, setResults] = useState(null);
   const [error, setError] = useState('');
 
+  // Function to fetch results from the backend
   const checkAccessibility = (url) => {
     axios
       .post('http://127.0.0.1:5000/api/check-url-accessibility', { url })
@@ -21,6 +23,7 @@ const Home = () => {
       });
   };
 
+  // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
     if (url) {
@@ -28,21 +31,18 @@ const Home = () => {
     }
   };
 
-  const handleDownloadPdf = () => {
-    if (results) {
-      axios
-        .post('http://127.0.0.1:5000/api/generate-pdf-report', { results }, { responseType: 'blob' })
-        .then((response) => {
-          const blob = new Blob([response.data], { type: 'application/pdf' });
-          const link = document.createElement('a');
-          link.href = URL.createObjectURL(blob);
-          link.download = 'accessibility_report.pdf';
-          link.click();
-        })
-        .catch((error) => {
-          setError('Error generating the PDF report.');
-        });
-    }
+  // Function to generate and download the report as PDF
+  const generateAndDownloadReport = async (results) => {
+    const response = await axios.post('http://127.0.0.1:5000/api/download-report', { results }, {
+      responseType: 'blob',  // Set the response type to handle binary data
+    });
+
+    // Create a downloadable link for the PDF
+    const blob = new Blob([response.data], { type: 'application/pdf' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'accessibility_report.pdf';
+    link.click();
   };
 
   return (
@@ -72,70 +72,57 @@ const Home = () => {
           </button>
         </form>
       </div>
+
       {error && <div style={{ color: 'red' }}>{error}</div>}
 
       <div>
         <h3>Results</h3>
         {results && (
           <div>
-            <h4>Alt Text Issues</h4>
-            {results.alt_text && results.alt_text.length > 0 ? (
-              <ul>
-                {results.alt_text.map((issue, index) => (
-                  <li key={index}>
-                    Missing alt attribute for <strong>{issue.tag}</strong> at{' '}
-                    <em>{issue.location}</em>
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <p>No issues found for Alt Text.</p>
+            {results.alt_text.length > 0 && (
+              <div>
+                <h4>Alt Text Issues</h4>
+                <ul>
+                  {results.alt_text.map((result, index) => (
+                    <li key={index}>
+                      <p><strong>Issue:</strong> {result.message}</p>
+                      <p><strong>Tag:</strong> {result.tag}</p>
+                      <p><strong>WCAG Guideline:</strong> {result.wcag_guideline}</p>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             )}
-
-            <h4>ARIA Labels Issues</h4>
-            {results.aria_labels && results.aria_labels.length > 0 ? (
-              <ul>
-                {results.aria_labels.map((issue, index) => (
-                  <li key={index}>
-                    ARIA label missing for <strong>{issue.tag}</strong> at{' '}
-                    <em>{issue.location}</em>
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <p>No issues found for ARIA Labels.</p>
+            {results.heading_structure.length > 0 && (
+              <div>
+                <h4>Heading Structure Issues</h4>
+                <ul>
+                  {results.heading_structure.map((result, index) => (
+                    <li key={index}>
+                      <p><strong>Issue:</strong> {result.message}</p>
+                      <p><strong>Tag:</strong> {result.tag}</p>
+                      <p><strong>WCAG Guideline:</strong> {result.wcag_guideline}</p>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             )}
-
-            <h4>Heading Structure Issues</h4>
-            {results.heading_structure && results.heading_structure.length > 0 ? (
-              <ul>
-                {results.heading_structure.map((issue, index) => (
-                  <li key={index}>
-                    Skipped heading: <strong>{issue.message}</strong> at{' '}
-                    <em>{issue.location}</em>
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <p>No issues found for Heading Structure.</p>
-            )}
+            <button
+              onClick={() => generateAndDownloadReport(results)}
+              style={{
+                padding: '10px',
+                backgroundColor: '#4CAF50',
+                color: 'white',
+                border: 'none',
+                cursor: 'pointer',
+                marginTop: '20px',
+              }}
+            >
+              Download Report as PDF
+            </button>
           </div>
         )}
       </div>
-
-      <button
-        onClick={handleDownloadPdf}
-        style={{
-          padding: '10px',
-          backgroundColor: '#4CAF50',
-          color: 'white',
-          border: 'none',
-          cursor: 'pointer',
-          marginTop: '20px',
-        }}
-      >
-        Download PDF Report
-      </button>
 
       <Footer />
     </div>
