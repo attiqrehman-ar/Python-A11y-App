@@ -1,8 +1,8 @@
 // frontend/src/components/Home.js
 import React, { useState } from 'react';
 import axios from 'axios';
-import Header from './Header'; // Add this line
-import Footer from './Footer'; // Add this line
+import Header from './Header';
+import Footer from './Footer';
 import Results from './Results';
 
 const Home = () => {
@@ -32,7 +32,7 @@ const Home = () => {
 
   return (
     <div style={{ fontFamily: 'Arial, sans-serif', padding: '20px' }}>
-      <Header /> {/* Header component */}
+      <Header />
       <div style={{ margin: '20px 0' }}>
         <h2>Enter Website URL</h2>
         <form onSubmit={handleSubmit}>
@@ -58,8 +58,44 @@ const Home = () => {
         </form>
       </div>
       {error && <div style={{ color: 'red' }}>{error}</div>}
-      <Results results={results} />
-      <Footer /> {/* Footer component */}
+
+      <div>
+        <h3>Results</h3>
+        {results && (
+          <div>
+            {results.alt_text.length > 0 && (
+              <div>
+                <h4>Alt Text Issues</h4>
+                <ul>
+                  {results.alt_text.map((result, index) => (
+                    <li key={index}>
+                      <p><strong>Issue:</strong> {result.message}</p>
+                      <p><strong>Tag:</strong> {result.tag}</p>
+                      <p><strong>WCAG Guideline:</strong> {result.wcag_guideline}</p>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            {results.heading_structure.length > 0 && (
+              <div>
+                <h4>Heading Structure Issues</h4>
+                <ul>
+                  {results.heading_structure.map((result, index) => (
+                    <li key={index}>
+                      <p><strong>Issue:</strong> {result.message}</p>
+                      <p><strong>Tag:</strong> {result.tag}</p>
+                      <p><strong>WCAG Guideline:</strong> {result.wcag_guideline}</p>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+
+      <Footer />
     </div>
   );
 };

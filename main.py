@@ -43,9 +43,19 @@ def api_check_url_accessibility():
 
     # Run checks on the fetched HTML content
     results = {
-        "alt_text": check_alt_attributes(html_content),
-        "aria_labels": check_aria_labels(html_content),
-        "heading_structure": check_headings_structure(html_content)
+        "alt_text": [{
+            "message": "Missing alt attribute for image accessibility.",
+            "tag": item.get("tag"),
+            "wcag_guideline": "WCAG 2.1, Guideline 1.1.1 - Non-text Content"
+        } for item in check_alt_attributes(html_content)],
+        
+        "aria_labels": check_aria_labels(html_content),  # Assuming ARIA label check returns a formatted result
+        
+        "heading_structure": [{
+            "message": "Skipped heading <h1> after <h3>",
+            "tag": item.get("tag"),
+            "wcag_guideline": "WCAG 2.4.6 - Headings and Labels"
+        } for item in check_headings_structure(html_content)],
     }
     
     return jsonify(results)
