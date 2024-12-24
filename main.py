@@ -2,9 +2,7 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 from app.audit_engine.alt_checker import check_alt_attributes
 from app.audit_engine.aria_checker import check_aria_labels
-from app.audit_engine.contrast_checker import check_color_contrast_in_html
 from app.audit_engine.heading_checker import check_headings_structure
-from app.audit_engine.keyboard_navigation_checker import check_keyboard_navigation
 from app.utils.report_generator import generate_report
 
 # Selenium imports
@@ -34,16 +32,20 @@ def api_check_url_accessibility():
     content = request.json
     url = content.get('url', '')
     
+    if not url:
+        return jsonify({"error": "URL is required"}), 400
+
     # Fetch the HTML content of the page
-    html_content = fetch_html_from_url(url)
-    
+    try:
+        html_content = fetch_html_from_url(url)
+    except Exception as e:
+        return jsonify({"error": f"Failed to fetch HTML from URL: {str(e)}"}), 500
+
     # Run checks on the fetched HTML content
     results = {
         "alt_text": check_alt_attributes(html_content),
         "aria_labels": check_aria_labels(html_content),
-        "color_contrast": check_color_contrast_in_html(html_content),
-        "heading_structure": check_headings_structure(html_content),
-        "keyboard_navigation": check_keyboard_navigation(html_content),
+        "heading_structure": check_headings_structure(html_content)
     }
     
     return jsonify(results)

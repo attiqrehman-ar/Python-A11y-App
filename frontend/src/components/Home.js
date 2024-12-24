@@ -1,45 +1,65 @@
+// frontend/src/components/Home.js
 import React, { useState } from 'react';
 import axios from 'axios';
+import Header from './Header'; // Add this line
+import Footer from './Footer'; // Add this line
+import Results from './Results';
 
 const Home = () => {
   const [url, setUrl] = useState('');
-  const [results, setResults] = useState({});
+  const [results, setResults] = useState(null);
+  const [error, setError] = useState('');
 
-  // Helper function to call the new API
-  const checkAccessibility = () => {
+  const checkAccessibility = (url) => {
     axios
       .post('http://127.0.0.1:5000/api/check-url-accessibility', { url })
       .then(response => {
-        setResults(response.data);  // Update the results with the API response
+        setResults(response.data);
+        setError('');
       })
       .catch(error => {
-        console.error('Error checking accessibility:', error);
+        setResults(null);
+        setError('Error fetching results from the server.');
       });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    checkAccessibility(); // Call the function to check the URL
+    if (url) {
+      checkAccessibility(url);
+    }
   };
 
   return (
-    <div>
-      <h1>WCAG Accessibility Checker</h1>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          value={url}
-          onChange={(e) => setUrl(e.target.value)}
-          placeholder="Enter Website URL"
-        />
-        <br />
-        <button type="submit">Check Accessibility</button>
-      </form>
-
-      <div>
-        <h2>Results</h2>
-        <pre>{JSON.stringify(results, null, 2)}</pre>
+    <div style={{ fontFamily: 'Arial, sans-serif', padding: '20px' }}>
+      <Header /> {/* Header component */}
+      <div style={{ margin: '20px 0' }}>
+        <h2>Enter Website URL</h2>
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            placeholder="Enter Website URL"
+            value={url}
+            onChange={(e) => setUrl(e.target.value)}
+            style={{ padding: '10px', width: '300px', marginRight: '10px' }}
+          />
+          <button
+            type="submit"
+            style={{
+              padding: '10px',
+              backgroundColor: '#4CAF50',
+              color: 'white',
+              border: 'none',
+              cursor: 'pointer',
+            }}
+          >
+            Check Accessibility
+          </button>
+        </form>
       </div>
+      {error && <div style={{ color: 'red' }}>{error}</div>}
+      <Results results={results} />
+      <Footer /> {/* Footer component */}
     </div>
   );
 };
